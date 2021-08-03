@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+Code/ch3/binaries
+Code/ch3/build
+Code/ch3/.vscode
+.vscode
