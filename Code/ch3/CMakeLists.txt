@@ -8,7 +8,7 @@ option(AUTO_LOCATE_VULKAN "AUTO_LOCATE_VULKAN" ON)
 
 if(AUTO_LOCATE_VULKAN)
 	message(STATUS "Attempting auto locate Vulkan using CMake......")
-	find_package(Vulkan)
+	find_package(Vulkan REQUIRED COMPONENTS Vulkan)
 	if (NOT ${Vulkan_INCLUDE_DIRS} STREQUAL "")
 		set(VULKAN_PATH ${Vulkan_INCLUDE_DIRS})
 		STRING(REGEX REPLACE "/Include" "" VULKAN_PATH ${VULKAN_PATH})
@@ -28,8 +28,13 @@ file(GLOB_RECURSE CPP_FILES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 file(GLOB_RECURSE HPP_FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/*.*)
 
 add_executable(${Recipe_Name} ${CPP_FILES} ${HPP_FILES})
+ 
+message("Vulkan_GLSLC_EXECUTABLE : ${Vulkan_GLSLC_EXECUTABLE}")
+message("Vulkan_INCLUDE_DIR      : ${Vulkan_INCLUDE_DIR}")
+message("Vulkan_LIBRARY          : ${Vulkan_LIBRARY}")
+message("Vulkan_GLSLANG_VALIDATOR_EXECUTABLE : ${Vulkan_GLSLANG_VALIDATOR_EXECUTABLE}")
 
-target_link_libraries( ${Recipe_Name} Vulkan::Vulkan)
+target_link_libraries( ${Recipe_Name} Vulkan::Vulkan Vulkan::Headers)
 
 set_property(TARGET ${Recipe_Name} PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/binaries)
 set_property(TARGET ${Recipe_Name} PROPERTY RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/binaries)
