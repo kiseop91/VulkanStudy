@@ -13,6 +13,9 @@ VulkanApplication::VulkanApplication()
 	// 애플리케이션 시작 시 인스턴스 계층 열거
 	instanceObj.layerExtension.getInstanceLayerProperties();
 	deviceObj = NULL;
+	
+	//일단  실습을 위해 켜놓자.
+	debugFlag = true;
 }
 
 VulkanApplication::~VulkanApplication()
@@ -93,7 +96,17 @@ void VulkanApplication::initialize()
 {
 	char title[] = "Hello World!!!";
 	// 지정된 레이어 및 확장 이름으로 Vulkan 인스턴스를 생성
+
+	if (debugFlag) {
+		instanceObj.layerExtension.areLayersSupported(layerNames);
+	}
+
 	createVulkanInstance(layerNames, instanceExtensionNames, title);
+
+	// 디버깅 리포트가 활성화 되어있다면..
+	if (debugFlag) {
+		instanceObj.layerExtension.createDebugReportCallback();
+	}
 
 	// 시스템의 물리적 장치 목록 가져오기
 	std::vector<VkPhysicalDevice> gpuList;

@@ -33,4 +33,8 @@ public:
     VulkanInstance  instanceObj;
 
 	VulkanDevice*      deviceObj;
+
+private:
+	//디버깅 활성화 플래그
+	bool debugFlag;
 };
